@@ -2,49 +2,29 @@ var DateScheduler = React.createClass({
   loadMeetingsFromServer() {
     $.ajax({
       url: this.props.url,
+      type: 'GET',
+      'contentType': 'application/json', 
       dataType: 'json',
       cache: false,
       success: function(data) {
+        console.log('Successful get request!', data);
         this.setState({data: data});
       }.bind(this),
       error: function(xhr, status, err) {
+        console.log('xhr: ', xhr);
+        console.log('error: ', err);
         console.error(this.props.url, status, err.toString());
       }.bind(this)    
-    })
+    });
   },
 
   getInitialState() {
-    return { data: {
-      meetings: [{
-        name: 'Fred Zirdung',
-        phoneNumber: '415-547-0254',
-        location: 'Local Edition',
-        date: 'Saturday',
-        time: '7:00PM',
-        shortDescription: 'Drinks',
-        description: 'Lots of Tasty Cocktails at Local Edition'
-      }, 
-      {
-        name: 'Allen Price',
-        phoneNumber: '415-343-0389',
-        location: 'Skype',
-        date: 'Sunday',
-        time: '3:00PM',
-        shortDescription: 'Skyping',
-        description: 'Hack Reactor Interview sounds fun!'
-      }
-      ],
-      phoneNumbers: [
-        {name: "Nancy", phone0: '510', phone1: '393', phone2: '3939'},
-        {name: "Jess", phone0: '415', phone1: '883', phone2: '2343'}
-      ]    
-    }
-    };
+    return {data: []};
   },
 
-  serverRequest() {
+  componentDidMount() {
     this.loadMeetingsFromServer();
-    // setInterval(this.loadMeetingsFromServer, this.props.updateInterval)
+    setInterval(this.loadMeetingsFromServer, this.props.updateInterval)
   },
 
   handleInputSubmit(submitObj) {
@@ -55,6 +35,9 @@ var DateScheduler = React.createClass({
       data: submitObj,
       cache: false,
       success: function(data) {
+        console.log('Received data from input request', data);
+        console.log('Current state', this.state.data);
+        // ToDO: Fix the set state
         this.setState({data: data});
       }.bind(this),
       error: function(xhr, status, err) {
@@ -74,7 +57,7 @@ var DateScheduler = React.createClass({
 	 	  </div>
 	 	  <div>
         <h4>Your Upcoming Dates</h4>
-	 	    <DateView meetings={this.state.data.meetings} />
+	 	    <DateView meetings={this.state.data} />
 	 	  </div>
 	 	</div>
 	 )
@@ -84,8 +67,36 @@ var DateScheduler = React.createClass({
 // Need to build a databse
 
 ReactDOM.render(
-  <DateScheduler url='/' updateInterval={5000}/>,
+  <DateScheduler url='/meeting' updateInterval={5000}/>,
   document.getElementById('main')
 );
 
 window.DateScheduler = DateScheduler;
+
+
+// { data: {
+//       meetings: [{
+//         name: 'Fred Zirdung',
+//         phoneNumber: '415-547-0254',
+//         location: 'Local Edition',
+//         date: 'Saturday',
+//         time: '7:00PM',
+//         shortDescription: 'Drinks',
+//         description: 'Lots of Tasty Cocktails at Local Edition'
+//       }, 
+//       {
+//         name: 'Allen Price',
+//         phoneNumber: '415-343-0389',
+//         location: 'Skype',
+//         date: 'Sunday',
+//         time: '3:00PM',
+//         shortDescription: 'Skyping',
+//         description: 'Hack Reactor Interview sounds fun!'
+//       }
+//       ],
+//       phoneNumbers: [
+//         {name: "Nancy", phone0: '510', phone1: '393', phone2: '3939'},
+//         {name: "Jess", phone0: '415', phone1: '883', phone2: '2343'}
+//       ]    
+//     }
+//     }
