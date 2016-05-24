@@ -1,23 +1,30 @@
-class Inputs extends React.Component {
+class Calendar extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      events: ['do some stuff']
+    };
+  }
+
   render() {
-	 return(
-		<form>
-		  Name:
-		  <input type="text" name="firstname" placeholder="Insert Username..."/><br/>
-		  Date's Name:
-		  <input type="text" name="lastname" placeholder="Insert Username..."/><br/>
-		  Time of Date:
-		  <input type="text" name="time" placeholder="Insert Time..."/><br/>
-		  Location:
-		  <input type="text" name="time" placeholder="Insert Meeting Spot..."/><br/>
-		  <input type="submit" value="Submit"/><br/><br/>
-		</form>
-	   );
+	 return (
+	 	<div>
+	 	  <div>
+	 	    <InputArea />
+	 	  </div>
+	 	  <div>
+	 	    <h4>This Week</h4>
+	 	    <Week events={this.state.events} currentDate={this.props.currentDate} />
+	 	  </div>
+	 	</div>
+	)
   }
 }
 
-
 ReactDOM.render(
-  <Inputs />,
+  <Calendar currentDate={23} />,
   document.getElementById('main')
 );
+
+window.Calendar = Calendar;
