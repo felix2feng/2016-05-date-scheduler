@@ -6,7 +6,7 @@ class DateView extends React.Component {
   }
 
   render() {
-    var meetings = this.props.meetings;
+    var meetings = [this.props.meetings][0];
     console.log('Meetings', meetings);
     return (
       <div class='datesView'>

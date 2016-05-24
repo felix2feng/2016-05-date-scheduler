@@ -2,7 +2,13 @@
 
 var InputArea = React.createClass({
   getInitialState() {
-    return {name: '', phone0: '', phone1: '', phone2: ''};
+    return {name: '', 
+            phone0: '', 
+            phone1: '', 
+            phone2: '', 
+            shortDescription: '', 
+            description: ''
+    };
   },
   autoTab(current, maxLength, to) {
     if (current.value.length === maxLength) {
@@ -23,6 +29,13 @@ var InputArea = React.createClass({
   },
   handlePhone2State(text) {
     this.setState({phone2: text.target.value});
+    this.autoTab(document.inputForm.phone2, 4, document.inputForm.shortDescription);
+  },
+  handleShortDescriptionState(text) {
+    this.setState({shortDescription: text.target.value});
+  },
+  handleDescriptionState(text) {
+    this.setState({description: text.target.value});
   },
   handleSubmit(e) {
     e.preventDefault();
@@ -30,45 +43,98 @@ var InputArea = React.createClass({
     var phone0 = this.state.phone0.trim();
     var phone1 = this.state.phone1.trim();
     var phone2 = this.state.phone2.trim();
-    if (!name || !phone0 || !phone1 || !phone2) {
+    var shortDescription = this.state.shortDescription.trim();
+    var description = this.state.description.trim();
+    if (!name || !phone0 || !phone1 || !phone2 || !shortDescription || !description) {
       return;
     }
-    this.props.onSubmit({name, phone0, phone1, phone2})
-    this.setState({name: '', phone0: '', phone1: '', phone2: ''});
+    this.props.onSubmit({name, phone0, phone1, phone2, shortDescription, description})
+    this.setState({
+            name: '', 
+            phone0: '', 
+            phone1: '', 
+            phone2: '', 
+            shortDescription: '', 
+            description: ''
+    });
   },
 
-  render() {	
+  render() {
+
+
+
+
     return(  
-      <form name='inputForm' onSubmit={this.handleSubmit}>
-    	  Name:
-    	  <input name='name' 
-          type="text" 
-          value={this.state.name} 
-          onChange={this.handleNameState} 
-          placeholder="Insert Name..."/><br/>
-    	  Phone Number: (
+      <form class="form-horizontal" name='inputForm' onSubmit={this.handleSubmit}>
+    	  <div class='form-group'>
+          <label class="col-sm-2 control-label" > Name: </label>
+            <br></br>
+            <input name='name'
+              class="col-sm-2 control-label" 
+              size='55'
+              type="text" 
+              value={this.state.name} 
+              onChange={this.handleNameState} 
+              placeholder=""/>
+        </div>
+      <div class='form-group'>
+    	  <label class="col-sm-2 control-label" > Phone Number: ( </label>
         <input name='phone0' 
-          size='3'
+          class="col-sm-2 control-label"
+          size='9'
           maxlength='3'
           type="text" 
           value={this.state.phone0} 
           onChange={this.handlePhone0State} 
-          placeholder="..."/> )
+          placeholder=""/>
+        <label class="col-sm-2 control-label" > ) </label>
         <input name='phone1' 
-          size='3'
+          class="col-sm-2 control-label"
+          size='9'
           maxlength='3'
           type="text" 
           value={this.state.phone1} 
           onChange={this.handlePhone1State} 
-          placeholder="..."/> - 
+          placeholder=""/>- 
         <input name='phone2' 
-          size='4'
+          class="col-sm-2 control-label"
+          size='16'
           maxlength='4'
           type="text" 
           value={this.state.phone2} 
           onChange={this.handlePhone2State} 
-          placeholder="..."/><br/>
-    	  <input type="submit" value="Submit"/><br/><br/>
+          placeholder=""/><br/>
+      </div>
+      <div class='form-group'>
+        <label class="col-sm-2 control-label" > Short Description: </label>
+        <br></br>
+        <input name='shortDescription' 
+          class="col-sm-2 control-label"
+          size='55'
+          type="text" 
+          value={this.state.shortDescription} 
+          onChange={this.handleShortDescriptionState} 
+          placeholder=""/><br/>
+      </div>
+      <div class='form-group'>
+        <label class="col-sm-2 control-label" > Description: </label>
+        <br></br>
+        <input name='description' 
+          class="form-horizontal"
+          size='55'
+          type="text" 
+          value={this.state.description} 
+          onChange={this.handleDescriptionState} 
+          placeholder="Description..."/><br/>
+      </div>
+      <div class='form-group'>
+    	  <button
+          id='submit'
+          type="submit" 
+          class="btn btn-primary btn-block"
+          > Submit 
+        </button>
+      </div><br/><br/>
     	</form>
     )
   }

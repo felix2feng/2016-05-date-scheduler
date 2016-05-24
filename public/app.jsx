@@ -50,13 +50,18 @@ var DateScheduler = React.createClass({
 
 
   render() {
-	 return (
-	 	<div>
+	 var h4Style = {
+    color: '#343434'
+   };
+
+   return (
+	 	
+    <div class='container'>
 	 	  <div>
 	 	    <InputArea onSubmit={this.handleInputSubmit}/>
 	 	  </div>
 	 	  <div>
-        <h4>Your Upcoming Dates</h4>
+        <h3 style={h4Style}>Your Upcoming Dates</h3>
 	 	    <DateView meetings={this.state.data} />
 	 	  </div>
 	 	</div>

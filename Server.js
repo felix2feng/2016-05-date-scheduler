@@ -19,7 +19,7 @@ var app = express();
 // });
 
 // app.disable('etag');
-
+// mongoose.connect('mongodb://localhost:27017/');
 
 var publicAsset = __dirname + '/public';
 
@@ -49,15 +49,24 @@ app.get('/meeting', function(req, res) {
 });
 
 app.post('/meeting', function(req, res) {
+  var date = util.chooseDate();
+  var location = util.chooseLocation();
+  var time = util.chooseTime();
+
   var meeting = new db.Meeting({
     name: req.body.name,
     phoneNumber: req.body.phone0 + '-' + req.body.phone1 + '-' + req.body.phone2,
-    location: util.chooseLocation(), 
-    date: util.chooseDate(), 
-    time: util.chooseTime(), 
+    location: location, 
+    date: date, 
+    time: time, 
     shortDescription: req.body.shortDescription,
     description: req.body.description
   })
+
+  util.sendMessage(
+    ('+1' + req.body.phone0 + req.body.phone1 + req.body.phone2),
+    ('Congrats ' + req.body.name + '! You have a ' + req.body.shortDescription +  ' date with your crush on ' + date + ' at ' +  time + '. Please meet at ' + location + ' for your date!')
+  );
 
   meeting.save(function(err, meeting) {
     if (err) {
