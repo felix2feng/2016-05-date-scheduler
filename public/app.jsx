@@ -8,6 +8,7 @@ class Calendar extends React.Component {
   }
 
   render() {
+
 	 return (
 	 	<div>
 	 	  <div>
@@ -22,8 +23,10 @@ class Calendar extends React.Component {
   }
 }
 
+// Need to build a databse
+
 ReactDOM.render(
-  <Calendar currentDate={23} />,
+  <Calendar currentDate={new Date()} />,
   document.getElementById('main')
 );
 

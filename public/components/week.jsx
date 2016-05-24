@@ -5,16 +5,23 @@ class Week extends React.Component {
     super(props);
   }
 
-
+  // Create the upcoming numerical week.
+    // The items in the array should be objects with numerical date, etc.
+  createWeek(today) {
+    var dateObj = this.props.currentDate;
+    var month = dateObj.getUTCMonth() + 1;
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+  }
 
   render() {
     var week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    var numericalDate = this.props.currentDate;
+    console.log('Current Date in Week.jsx: ', this.props.currentDate);
+    var numericalDate = this.props.currentDate.getUTCDate();
     return (
       <div>
-  		  Week 1 <br/>
         {week.map((day, i) => {
-          return (<Day day={day} key={i}  />)
+          return (<Day day={day} i={i} date={numericalDate}  />)
         }
         )}
   		</div>
