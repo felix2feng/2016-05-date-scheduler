@@ -1,0 +1,24 @@
+{
+  "name": "date-scheduler",
+  "description": "schedule a date using google calendar",
+  "main": "Server.js",
+  "authors": [
+    "Felix Feng"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "date",
+    "tinder"
+  ],
+  "homepage": "https://github.com/felix2feng/2016-05-date-scheduler",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.4"
+  }
+}
