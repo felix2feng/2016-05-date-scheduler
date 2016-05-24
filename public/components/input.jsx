@@ -5,11 +5,7 @@ var InputArea = React.createClass({
     return {name: '', phone0: '', phone1: '', phone2: ''};
   },
   autoTab(current, maxLength, to) {
-    console.log('current value length: ', current.value.length);
-    console.log('current max length: ', current.maxlength);
-
     if (current.value.length === maxLength) {
-      console.log('It has been breached');
       to.focus();
     }
   },
@@ -17,18 +13,29 @@ var InputArea = React.createClass({
     this.setState({name: text.target.value});
   },
   handlePhone0State(text) {
-    console.log('inputForm.phone0', document.inputForm.phone0.value);
     this.setState({phone0: text.target.value});
     this.autoTab(document.inputForm.phone0, 3, document.inputForm.phone1);
     // Would be dope if when we will out the length to be 3, to automatically prompt next fillin
   },
   handlePhone1State(text) {
     this.setState({phone1: text.target.value});
+    this.autoTab(document.inputForm.phone1, 3, document.inputForm.phone2);
   },
   handlePhone2State(text) {
     this.setState({phone2: text.target.value});
   },
-
+  handleSubmit(e) {
+    e.preventDefault();
+    var name = this.state.name.trim();
+    var phone0 = this.state.phone0.trim();
+    var phone1 = this.state.phone1.trim();
+    var phone2 = this.state.phone2.trim();
+    if (!name || !phone0 || !phone1 || !phone2) {
+      return;
+    }
+    this.props.onSubmit({name, phone0, phone1, phone2})
+    this.setState({name: '', phone0: '', phone1: '', phone2: ''});
+  },
 
   render() {	
     return(  
@@ -46,7 +53,7 @@ var InputArea = React.createClass({
           type="text" 
           value={this.state.phone0} 
           onChange={this.handlePhone0State} 
-          placeholder="Zip Code"/> )
+          placeholder="..."/> )
         <input name='phone1' 
           size='3'
           maxlength='3'
